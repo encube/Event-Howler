@@ -31,6 +31,7 @@
         android:layout_height="wrap_content"
         android:textOn="howling"
         android:textOff="stopped"
-        android:onClick="onSwitchToggled"/>
+        android:onClick="onSwitchToggled"
+        android:checked="false"/>
 
 </LinearLayout>

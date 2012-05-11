@@ -1,7 +1,5 @@
 package com.onb.eventHowler;
 
-import java.util.ArrayList;
-import java.util.List;
 import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
@@ -9,10 +7,9 @@ import android.telephony.SmsManager;
 import android.widget.Toast;
 
 public class EventHowlerSenderService extends Service{
+	 
+	EventHowlerApplication application;
 	
-	List<String> portNumbers = new ArrayList<String>(); //for test
-	String message = "hello, please come"; //for test
-
 	@Override
 	public IBinder onBind(Intent intent) {
 		return null;
@@ -22,8 +19,6 @@ public class EventHowlerSenderService extends Service{
 	public void onCreate() {
 		Toast.makeText(this, "creating event Howler Sender service",
 				Toast.LENGTH_SHORT).show();
-		portNumbers.add("5558"); //for test
-		portNumbers.add("5556"); //for test
 		super.onCreate();
 	}
 
@@ -31,9 +26,20 @@ public class EventHowlerSenderService extends Service{
 	public int onStartCommand(Intent intent, int flags, int startId) {
 		Toast.makeText(this, "event Howler Sender service started",
 				Toast.LENGTH_SHORT).show();
-		for(int i=0; i<portNumbers.size(); i++){ //for test
-			sendSMS(portNumbers.get(i), message); //for test
-		}
+		application = (EventHowlerApplication)getApplication();
+		new Thread(new Runnable() {
+			@Override
+			public void run() {
+				for(int i = 0; i < application.getPortCount(); i++){
+					sendSMS(application.getPortAtIndex(i).getPhoneNumber(), "hi, please come " + application.getPortAtIndex(i).getName());
+					try {
+						Thread.sleep(2000);
+					} catch (Exception e) {
+						
+					}
+				}
+			}
+		}).start();
 		return super.onStartCommand(intent, flags, startId);
 	}
 
