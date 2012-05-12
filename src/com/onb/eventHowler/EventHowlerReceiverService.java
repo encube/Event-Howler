@@ -11,7 +11,7 @@ public class EventHowlerReceiverService extends Service{
 	final String SMS_RECEIVED = "android.provider.Telephony.SMS_RECEIVED";
 	private EventHowlerBroadcastReceiver eventHowlerBraoaBroadcastReceiver = new EventHowlerBroadcastReceiver();
 	private IntentFilter SMS_RECEIVED_FILTER = new IntentFilter(SMS_RECEIVED);
-	
+
 	@Override
 	public IBinder onBind(Intent intent) {
 		return null;

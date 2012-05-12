@@ -27,20 +27,37 @@ public class EventHowlerSenderService extends Service{
 		Toast.makeText(this, "event Howler Sender service started",
 				Toast.LENGTH_SHORT).show();
 		application = (EventHowlerApplication)getApplication();
+		
 		new Thread(new Runnable() {
 			@Override
 			public void run() {
-				for(int i = 0; i < application.getPortCount(); i++){
-					sendSMS(application.getPortAtIndex(i).getPhoneNumber(), "hi, please come " + application.getPortAtIndex(i).getName());
+				int i = 0;
+				while(true){
+					if(application.getPaticipantAtIndex(i).getStatus() == "FOR_SEND"){
+						sendSMS(application.getPaticipantAtIndex(i).getPhoneNumber(),
+								application.getInvitationMessage() + application.getPaticipantAtIndex(i).getName());
+						application.getPaticipantAtIndex(i).setStatus("SENT");
+					}
+					
 					try {
 						Thread.sleep(2000);
-					} catch (Exception e) {
-						
+					}
+					catch (Exception e) {}
+					
+					if(i+1<application.getParticipantCount()){
+						i++;
+					}
+					else if(application.hasOnGoingEvent()){
+						i=0;
+					}
+					else{
+						break;
 					}
 				}
+				stopSelf();
 			}
 		}).start();
-		return super.onStartCommand(intent, flags, startId);
+		return Service.START_NOT_STICKY;
 	}
 
 	@Override
@@ -49,7 +66,7 @@ public class EventHowlerSenderService extends Service{
 				Toast.LENGTH_SHORT).show();
 		super.onDestroy();
 	}
-	
+
 	private void sendSMS(String phoneNumber, String message) {                
 	    SmsManager sms = SmsManager.getDefault();
 	    sms.sendTextMessage(phoneNumber, null, message, null, null);     

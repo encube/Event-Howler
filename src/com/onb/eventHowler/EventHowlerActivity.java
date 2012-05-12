@@ -16,13 +16,15 @@ public class EventHowlerActivity extends Activity {
     }
     
     public void onSwitchToggled(View view){
+    	EventHowlerApplication application = (EventHowlerApplication)getApplication();
     	ToggleButton toggleButton = (ToggleButton)view.findViewById(R.id.howl_toggle_button);
     	if(toggleButton.isChecked()){
+    		application.setHasOnGoingEvent(true);
     		startService(new Intent(this, EventHowlerSenderService.class));
     		startService(new Intent(this, EventHowlerReceiverService.class));
     	}
     	else{
-    		stopService(new Intent(this, EventHowlerSenderService.class));
+    		application.setHasOnGoingEvent(false);
     		stopService(new Intent(this, EventHowlerReceiverService.class));
     	}
     }
