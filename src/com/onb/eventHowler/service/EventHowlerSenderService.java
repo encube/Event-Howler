@@ -1,7 +1,6 @@
 package com.onb.eventHowler.service;
 
-import com.onb.eventHowler.application.EventHowlerApplication;
-import com.onb.eventHowler.application.EventHowlerOpenDbHelper;
+import com.onb.eventHowler.application.*;
 import com.onb.eventHowler.domain.EventHowlerParticipant;
 
 import android.app.Service;
@@ -71,9 +70,10 @@ public class EventHowlerSenderService extends Service{
 						openHelper.updateStatus(new EventHowlerParticipant(participantCursor.getString(COLUMN_NAME),
 								participantCursor.getString(COLUMN_PNUMBER),
 								"SENT"));
+						Log.d("sending sms", participantCursor.getString(0)+participantCursor.getString(1)+participantCursor.getString(2));
 					}
 					
-					Log.d("sender", participantCursor.getString(0)+participantCursor.getString(1)+participantCursor.getString(2));
+					Log.d("in loop", "running");
 					try {
 						Thread.sleep(2000);
 					}

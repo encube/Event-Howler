@@ -1,7 +1,6 @@
 package com.onb.eventHowler.service;
 
 import com.onb.eventHowler.application.EventHowlerOpenDbHelper;
-
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -18,14 +17,14 @@ public class EventHowlerBroadcastReceiver extends BroadcastReceiver{
 	public void onReceive(Context context, Intent intent) {
 		//test
 		EventHowlerOpenDbHelper openHelper = new EventHowlerOpenDbHelper(context);
-		Log.d("broadcastReceiver", openHelper.getCount() + "");
+		Log.d("broadcastReceiver", openHelper.getCount() + " broadcast receiver");
 		//test
 		
 		if(intent.getAction().equals(SMS_RECEIVED)){
 
 	        Bundle bundle = intent.getExtras();        
 	        SmsMessage[] msgs = null;
-	        String str = "";            
+	        String str = "";
 	        if (bundle != null)
 	        {
 

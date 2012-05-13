@@ -2,7 +2,6 @@ package com.onb.eventHowler.activity;
 
 import com.onb.eventHowler.R;
 import com.onb.eventHowler.application.EventHowlerApplication;
-
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;

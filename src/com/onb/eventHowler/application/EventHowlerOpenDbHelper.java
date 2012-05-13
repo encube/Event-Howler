@@ -52,25 +52,30 @@ public class EventHowlerOpenDbHelper extends SQLiteOpenHelper{
 	
 	public int getCount(){
 		Cursor cursor = getAllParticipant();
+		Log.d("openHelper", cursor.getCount()+"");
 		return cursor.getCount();
 	}
 	
 	
 	public Cursor getAllParticipant() {
+		Log.d("openHelper", "getAllParticipant");
 		return getReadableDatabase().rawQuery("SELECT * FROM " + TABLE_PARTICIPANTS, null);
 	}
 	
 	public Cursor getAllMesssages(){
+		Log.d("openHelper", "getAllMessages");
 		return getReadableDatabase().rawQuery("SELECT * FROM " + TABLE_MESSAGES, null);
 	}
 	
 	
 	public void resetDatabase() {
+		Log.d("openHelper", "resetting database");
 		getWritableDatabase().delete(TABLE_PARTICIPANTS, "1", null);
 		getWritableDatabase().delete(TABLE_MESSAGES, "1", null);
 	}
 	
 	public void insertParticipant(EventHowlerParticipant participant){
+		Log.d("openHelper", "inserting participant");
 		ContentValues contentValues = new ContentValues();
 		contentValues.put(PARTICIPANT_COLUMN_NAME, participant.getName());
 		contentValues.put(PARTICIPANT_COLUMN_PNUMBER, participant.getPhoneNumber());
@@ -84,6 +89,7 @@ public class EventHowlerOpenDbHelper extends SQLiteOpenHelper{
 								String confirmationCode,
 								String negationCode){
 		
+		Log.d("opanHelper", "populating messages");
 		ContentValues invitationMessageValues = new ContentValues();
 		invitationMessageValues.put(MESSAGE_COLUMN_MESSAGE, invitationMessage);
 		
@@ -103,6 +109,7 @@ public class EventHowlerOpenDbHelper extends SQLiteOpenHelper{
 	}
 	
 	public void updateStatus(EventHowlerParticipant participant){
+		Log.d("openHelper", "updating status");
 		ContentValues contentValues = new ContentValues();
 		contentValues.put(PARTICIPANT_COLUMN_PNUMBER, participant.getPhoneNumber());
 		contentValues.put(PARTICIPANT_COLUMN_NAME, participant.getName());

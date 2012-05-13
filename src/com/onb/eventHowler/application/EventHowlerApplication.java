@@ -1,11 +1,10 @@
 package com.onb.eventHowler.application;
 
-import com.onb.eventHowler.service.EventHowlerBroadcastReceiver;
-import com.onb.eventHowler.service.EventHowlerSenderService;
-
+import com.onb.eventHowler.service.*;
 import android.app.Application;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.util.Log;
 
 
 public class EventHowlerApplication extends Application{
@@ -27,12 +26,14 @@ public class EventHowlerApplication extends Application{
 	}
 	
 	public void startEvent(){
+		Log.d("application", "starting event");
 		registerReceiver(eventHowlerBraoaBroadcastReceiver, SMS_RECEIVED_FILTER);
 		startService(new Intent(this, EventHowlerSenderService.class));
 		hasOnHoingEvent = true;
 	}
 	
 	public void stopEvent(){
+		Log.d("application", "stopping event");
 		unregisterReceiver(eventHowlerBraoaBroadcastReceiver);
 		hasOnHoingEvent = false;
 	}
