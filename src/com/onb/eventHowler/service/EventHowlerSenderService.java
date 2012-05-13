@@ -40,8 +40,8 @@ public class EventHowlerSenderService extends Service{
 				
 		openHelper = new EventHowlerOpenDbHelper(getApplicationContext());
 		
-		EventHowlerParticipant participant1 = new EventHowlerParticipant("novo", "5556", "FOR_SEND");
-		EventHowlerParticipant participant2 = new EventHowlerParticipant("naga", "5558", "FOR_SEND");
+		EventHowlerParticipant participant1 = new EventHowlerParticipant("novo", "5554", "FOR_SEND");
+		EventHowlerParticipant participant2 = new EventHowlerParticipant("naga", "5556", "FOR_SEND");
 		openHelper.insertParticipant(participant1);
 		openHelper.insertParticipant(participant2);
 		openHelper.populateMessages("Hello fella, i would like to invite for a pack party ", 
@@ -88,6 +88,8 @@ public class EventHowlerSenderService extends Service{
 						participantCursor = openHelper.getAllParticipant();
 					}
 					else{
+						messageCursor.close();
+						participantCursor.close();
 						openHelper.resetDatabase();
 						break;
 					}

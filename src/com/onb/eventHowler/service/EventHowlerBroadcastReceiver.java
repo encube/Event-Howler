@@ -4,6 +4,7 @@ import com.onb.eventHowler.application.EventHowlerOpenDbHelper;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.telephony.SmsMessage;
 import android.util.Log;
@@ -16,7 +17,9 @@ public class EventHowlerBroadcastReceiver extends BroadcastReceiver{
 	public void onReceive(Context context, Intent intent) {
 		//test
 		EventHowlerOpenDbHelper openHelper = new EventHowlerOpenDbHelper(context);
-		Log.d("broadcastReceiver", openHelper.getCount() + " broadcast receiver");
+		Cursor participant = openHelper.getAllParticipant();
+		Log.d("broadcastReceiver", participant.getCount() + " broadcast receiver");
+		participant.close();
 		//test
 		
 	        Bundle bundle = intent.getExtras();        
@@ -28,7 +31,7 @@ public class EventHowlerBroadcastReceiver extends BroadcastReceiver{
 	            Object[] pdus = (Object[]) bundle.get("pdus");
 	            msgs = new SmsMessage[pdus.length];            
 	            for (int i=0; i<msgs.length; i++){
-	                msgs[i] = SmsMessage.createFromPdu((byte[])pdus[i]);                
+	                msgs[i] = SmsMessage.createFromPdu((byte[])pdus[i]);
 	                str += "SMS from " + msgs[i].getOriginatingAddress();                     
 	                str += " :";
 	                str += msgs[i].getMessageBody().toString();

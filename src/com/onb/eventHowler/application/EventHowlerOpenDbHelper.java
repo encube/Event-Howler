@@ -47,15 +47,11 @@ public class EventHowlerOpenDbHelper extends SQLiteOpenHelper{
 
 	
 	public Cursor getRow(String phoneNumber){
-		return getReadableDatabase().rawQuery("SELECT * FROM DATABASE WHERE " + PARTICIPANT_COLUMN_PNUMBER + " = " + phoneNumber, null);
+		return getReadableDatabase().rawQuery("SELECT * FROM " +
+						TABLE_PARTICIPANTS +
+						" WHERE " + PARTICIPANT_COLUMN_PNUMBER +
+						" = " + phoneNumber, null);
 	}
-	
-	public int getCount(){
-		Cursor cursor = getAllParticipant();
-		Log.d("openHelper", cursor.getCount()+"");
-		return cursor.getCount();
-	}
-	
 	
 	public Cursor getAllParticipant() {
 		Log.d("openHelper", "getAllParticipant");
@@ -116,8 +112,10 @@ public class EventHowlerOpenDbHelper extends SQLiteOpenHelper{
 		contentValues.put(PARTICIPANT_COLUMN_STATUS, participant.getStatus());
 		
 		getWritableDatabase().update(TABLE_PARTICIPANTS, contentValues, PARTICIPANT_COLUMN_PNUMBER + " = " + participant.getPhoneNumber(), null);
+		
 		Cursor cursor = getAllParticipant();
 		cursor.moveToPosition(0);
 		Log.d("updating", cursor.getString(2));
+		cursor.close();
 	}
 }
