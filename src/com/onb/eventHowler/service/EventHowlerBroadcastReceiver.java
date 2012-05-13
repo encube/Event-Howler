@@ -11,7 +11,6 @@ import android.widget.Toast;
 
 public class EventHowlerBroadcastReceiver extends BroadcastReceiver{
 	
-	final String SMS_RECEIVED = "android.provider.Telephony.SMS_RECEIVED";
 	
 	@Override
 	public void onReceive(Context context, Intent intent) {
@@ -20,8 +19,6 @@ public class EventHowlerBroadcastReceiver extends BroadcastReceiver{
 		Log.d("broadcastReceiver", openHelper.getCount() + " broadcast receiver");
 		//test
 		
-		if(intent.getAction().equals(SMS_RECEIVED)){
-
 	        Bundle bundle = intent.getExtras();        
 	        SmsMessage[] msgs = null;
 	        String str = "";
@@ -39,6 +36,6 @@ public class EventHowlerBroadcastReceiver extends BroadcastReceiver{
 	            }
 
 	            Toast.makeText(context, str, Toast.LENGTH_SHORT).show(); //for test
-	        }}}
+	        }}
 
 }

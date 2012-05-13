@@ -13,8 +13,15 @@ import android.widget.Toast;
 
 public class EventHowlerSenderService extends Service{
 	 
-	EventHowlerApplication application;
-	EventHowlerOpenDbHelper openHelper;
+	private static EventHowlerApplication application;
+	private static EventHowlerOpenDbHelper openHelper;
+	
+	private static final int COLUMN_PNUMBER  = 0, 
+			COLUMN_NAME  = 1, 
+			COLUMN_STATUS  = 2,
+			COLUMN_MESSAGES = 1,
+			INITIAL_POSITION = 0;
+
 	
 	@Override
 	public IBinder onBind(Intent intent) {
@@ -30,21 +37,15 @@ public class EventHowlerSenderService extends Service{
 
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startId) {
-		
-		final int COLUMN_PNUMBER  = 0, 
-				COLUMN_NAME  = 1, 
-				COLUMN_STATUS  = 2,
-				COLUMN_MESSAGES = 1,
-				INITIAL_POSITION = 0;
-		
+				
 		openHelper = new EventHowlerOpenDbHelper(getApplicationContext());
 		
 		EventHowlerParticipant participant1 = new EventHowlerParticipant("novo", "5556", "FOR_SEND");
 		EventHowlerParticipant participant2 = new EventHowlerParticipant("naga", "5558", "FOR_SEND");
 		openHelper.insertParticipant(participant1);
 		openHelper.insertParticipant(participant2);
-		openHelper.populateMessages("Hello fella, i would like to invite for a pack party", 
-				"thank you, we receive your reply", "yes", "no");
+		openHelper.populateMessages("Hello fella, i would like to invite for a pack party ", 
+				"thank you, we receive your reply ", "yes", "no");
 		
 		Toast.makeText(this, "event Howler Sender service started",
 				Toast.LENGTH_SHORT).show();
